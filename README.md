@@ -1,4 +1,4 @@
-# Project 4 - Globitek Authentication and Login Throttling
+# Project 6 - Globitek Authentication and Login Throttling
 
 Time spent: **9** hours spent in total
 
