@@ -1,6 +1,6 @@
 <?php
 require_once('../../../private/initialize.php');
-
+require_login();
 // Set default values for all variables the page needs.
 $errors = array();
 $country = array(
@@ -8,7 +8,12 @@ $country = array(
   'code' => ''
 );
 
-if(is_post_request()) {
+if(is_post_request()) {  
+  if(!request_is_same_domain()){
+    echo "Error: request is not the same domain";
+    exit;
+  }
+  check_csrf_token_valid();
 
   // Confirm that values are present before accessing them.
   if(isset($_POST['name'])) { $country['name'] = $_POST['name']; }
@@ -39,6 +44,7 @@ if(is_post_request()) {
     Code:<br />
     <input type="text" name="code" value="<?php echo h($country['code']); ?>" /><br />
     <br />
+    <?php echo csrf_token_tag();?>
     <input type="submit" name="submit" value="Create"  />
   </form>
 

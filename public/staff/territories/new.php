@@ -1,5 +1,6 @@
 <?php
 require_once('../../../private/initialize.php');
+require_login();
 
 if(!isset($_GET['id'])) {
   redirect_to('../index.php');
@@ -14,6 +15,11 @@ $territory = array(
 );
 
 if(is_post_request()) {
+  if(!request_is_same_domain()){
+    echo "Error: request is not the same domain";
+    exit;
+  }
+  check_csrf_token_valid();
 
   // Confirm that values are present before accessing them.
   if(isset($_POST['name'])) { $territory['name'] = $_POST['name']; }
@@ -44,6 +50,7 @@ if(is_post_request()) {
     Position:<br />
     <input type="text" name="position" value="<?php echo h($territory['position']); ?>" /><br />
     <br />
+    <?php echo csrf_token_tag();?>
     <input type="submit" name="submit" value="Create"  />
   </form>
 

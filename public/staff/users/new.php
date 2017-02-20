@@ -15,6 +15,12 @@ $user = array(
 
 if(is_post_request()) {
 
+  if(!request_is_same_domain()){
+    echo "Error: request is not the same domain";
+    exit;
+  }
+  check_csrf_token_valid();
+
   // Confirm that values are present before accessing them.
   if(isset($_POST['first_name'])) { $user['first_name'] = $_POST['first_name']; }
   if(isset($_POST['last_name'])) { $user['last_name'] = $_POST['last_name']; }
@@ -52,13 +58,13 @@ if(is_post_request()) {
     Email:<br />
     <input type="text" name="email" value="<?php echo h($user['email']); ?>" /><br />
     Password:<br />
-    <input type="password" name="password" value="" /> 
-    <!-- Strong password suggestion: <?php //echo h(generate_strong_password(12)); ?> -->
+    <input type="password" name="password" value="" /> Strong password suggestion: <?php echo h(generate_strong_password(12)); ?>
     <br />
     Confirm password:<br />
     <input type="password" name="confirm_password" value="" /><br />
     <p>Passwords should be at least 12 characters and include at least one uppercase letter, lowercase letter, number, and symbol.</p>
     <br />
+    <?php echo csrf_token_tag();?>
     <input type="submit" name="submit" value="Create"  />
   </form>
 
