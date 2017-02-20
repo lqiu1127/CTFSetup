@@ -1,85 +1,52 @@
-# Project 6 - Globitek Authentication and Login Throttling
+# Project 4 - Globitek Authentication and Login Throttling
 
-Time spent: **X** hours spent in total
+Time spent: **9** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
-1\. [ ]  Required: Test for initial vulnerabilities
+**(all required stories completed)**
 
-2\. [ ]  Required: Configure sessions
-  * [ ]  Required: Only allow session IDs to come from cookies
-  * [ ]  Required: Expire after one day
-  * [ ]  Required: Use cookies which are marked as HttpOnly
-
-3\. [ ]  Required: Complete Login page.
-  * [ ]  Required: Show an error message when username is not found.
-  * [ ]  Required: Show an error message when username is found but password does not match.
-  * [ ]  Required: After login, store user ID in session data.
-  * [ ]  Required: After login, store user last login time in session data.
-  * [ ]  Required: Regenerate the session ID at the appropriate point.
-
-4\. [ ]  Required: Require login to access staff area pages.
-  * [ ]  Required: Add a login requirement to *almost all* staff area pages.
-  * [ ]  Required: Write code for `last_login_is_recent()`.
-
-5\. [ ]  Required: Complete Logout page.
-  * [ ]  Required: Add code to destroy the user's session file after logging out.
-
-6\. [ ]  Required: Add CSRF protections to the state forms.
-  * [ ]  Required: Create a CSRF token.
-  * [ ]  Required: Add CSRF tokens to forms.
-  * [ ]  Required: Compare tokens against the stored version of the token.
-  * [ ]  Required: Only process forms data sent by POST requests.
-  * [ ]  Required: Confirm request referer is from the same domain as the host.
-  * [ ]  Required: Store the CSRF token in the user's session.
-  * [ ]  Required: Add the same CSRF token to the login form as a hidden input.
-  * [ ]  Required: When submitted, confirm that session and form tokens match.
-  * [ ]  Required: If tokens do not match, show an error message.
-  * [ ]  Required: Make sure that a logged-in user can use pages as expected.
-
-7\. [ ]  Required: Ensure the application is not vulnerable to XSS attacks.
-
-8\. [ ]  Required: Ensure the application is not vulnerable to SQL Injection attacks.
-
-9\. [ ]  Required: Run all tests from Objective 1 again and confirm that your application is no longer vulnerable to any test.
-
+- [x] On the existing pages "public/staff/users/new.php" and "public/staff/users/edit.php", a user sees the appropriate forms
+- [x] For both users/new.php and users/edit.php, submitting the form performs data validations
+- [x] If all validations on the user data pass, encrypt and store passwords
+- [x] Use PHP's password_verify() function to test the entered password against the password stored in users.hashed_password for the username provided and Ensure the login page does not display content which would create a User Enumeration weakness
+- [x] Implement login throttling
+- [x] Reset failed logins after a successful login
+- [x] Watch out for SQLI Injection and Cross-Site Scripting vulnerabilities
 
 The following advanced user stories are optional:
 
-* [ ]  Bonus Objective 1: Identify security flaw in Objective #4 (requiring login on staff pages)
-  * [ ]  Identify the security principal not being followed.
-  * [ ]  Write a short description of how the code could be modified to be more secure.
+**(all optional stories completed)**
 
-* [ ] Bonus Objective 2: Add CSRF protections to all forms in the staff directory
+- [x] Bonus 1: Identify the User Enumeration weakness and write a short description of how the code could be improved
+  - [x] **(see Notes section)**
+- [x] Bonus 2: A blank password will still allow updating other user values and not touch the existing password, but providing a password will validate and update the password too
+- [x] Bonus 3: Use the options to set the bcrypt "cost" parameter to 11
+  - [x] **(see Notes section)**
+- [x] Bonus 4: On "public/staff/users/edit.php", add a new text field for "Previous password". When the form is submitted, validate that the correct password has been provided before allowing the password to be updated
+- [x] Advanced 1: Implement `password_hash()` and `password_verify()` same functions yourself using the PHP function crypt() and the bcrypt hash algorithm. Name your versions `my_password_hash()` and `my_password_verify()` and include them in "private/auth_functions.php"
+- [x] Advanced 2: Write a PHP function in "private/auth_functions.php" called `generate_strong_password()` which will generate a random strong password containing the number of characters specified be a function argument
 
-* [ ]  Bonus Objective 3: CSRF tokens only valid for 10 minutes.
-
-* [ ]  Bonus Objective 4: Sessions are valid only if user-agent string matches previous value.
-
-* [ ]  Advanced Objective: Set/Get Signed-Encrypted Cookie
-  * [ ]  Create "public/set\_secret\_cookie.php".
-  * [ ]  Create "public/get\_secret\_cookie.php".
-  * [ ]  Encrypt and sign cookie before storing.
-  * [ ]  Verify cookie is signed correctly or show error message.
-  * [ ]  Decrypt cookie.
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/iQcdNxJ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Describe any challenges encountered while building the app.
+* **Bonus Objective 1:** The subtle User Enumeration weakness with the login pages comes from the username remains when a user exist. This gives hacker information on whether a certain username exist or not and they can attack that particular user based on this information.
+* **Bonus Objective 3:** We can still login after changing the bcrypt's cost parameter because `password_verify()` looks at the at the beginning of the hashed password (e.g. $2y$10$salt) to detect which encryption algorithm and the options (such as cost) to use. In that case, we can see that const is 10.
+* To complete bonus objective 2 and 4 I ignore previous password if the user is inserting a new user. Otherwise, when the user is editing, I get the previous password and compare. If password is not set, I ignore previous password all together and do not perform the quary. 
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2017] [Tianhao Qiu]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
