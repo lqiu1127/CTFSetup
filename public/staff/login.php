@@ -11,9 +11,7 @@ if(is_post_request() && request_is_same_domain()) {
   // Confirm that values are present before accessing them.
   if(isset($_POST['username'])) { $username = $_POST['username']; }
   if(isset($_POST['password'])) { $password = $_POST['password']; }
-  $hashed_password = password_hash('Codepath!@18Person', PASSWORD_BCRYPT,
-      ['cost' => 11]);
-  echo $hashed_password;
+  
   // Validations
   if (($remaining = throttle_time($username))) {
     $errors[] = "Too many failed logins for this username. You will need to wait " . h($remaining) . " minutes before attempting another login.";
