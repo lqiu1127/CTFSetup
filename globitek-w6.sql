@@ -19,13 +19,15 @@ SET time_zone = "+00:00";
 --
 -- Database: `globitek`
 --
+CREATE DATABASE IF NOT EXISTS `globitek` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `globitek`;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `countries`
 --
-
+DROP TABLE IF EXISTS `countries`;
 CREATE TABLE `countries` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -46,6 +48,7 @@ INSERT INTO `countries` (`id`, `name`, `code`) VALUES
 -- Table structure for table `failed_logins`
 --
 
+DROP TABLE IF EXISTS `failed_logins`;
 CREATE TABLE `failed_logins` (
   `id` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
@@ -68,6 +71,7 @@ INSERT INTO `failed_logins` (`id`, `username`, `count`, `last_attempt`) VALUES
 -- Table structure for table `salespeople`
 --
 
+DROP TABLE IF EXISTS `salespeople`;
 CREATE TABLE `salespeople` (
   `id` int(11) NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
@@ -97,7 +101,7 @@ INSERT INTO `salespeople` (`id`, `first_name`, `last_name`, `phone`, `email`) VA
 --
 -- Table structure for table `salespeople_territories`
 --
-
+DROP TABLE IF EXISTS `salespeople_territories`;
 CREATE TABLE `salespeople_territories` (
   `territory_id` int(11) DEFAULT NULL,
   `salesperson_id` int(11) DEFAULT NULL
@@ -176,7 +180,7 @@ INSERT INTO `salespeople_territories` (`territory_id`, `salesperson_id`) VALUES
 --
 -- Table structure for table `states`
 --
-
+DROP TABLE IF EXISTS `states`;
 CREATE TABLE `states` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -248,7 +252,7 @@ INSERT INTO `states` (`id`, `name`, `code`, `country_id`) VALUES
 --
 -- Table structure for table `territories`
 --
-
+DROP TABLE IF EXISTS `territories`;
 CREATE TABLE `territories` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -329,7 +333,7 @@ INSERT INTO `territories` (`id`, `name`, `state_id`, `position`) VALUES
 --
 -- Table structure for table `users`
 --
-
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `first_name` varchar(255) DEFAULT NULL,
@@ -437,7 +441,6 @@ ALTER TABLE `users`
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
 
-/*! Added capture the flag element */;
 DROP TABLE IF EXISTS `secrets`;
 CREATE TABLE `secrets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
