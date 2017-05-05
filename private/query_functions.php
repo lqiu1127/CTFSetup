@@ -353,7 +353,10 @@
       // No loop needed, there will be only one result
       $secret = db_fetch_assoc($secret_result);
       db_free_result($secret_result);
-      echo $secret['secret'];
+      $the_secret = "<h2 style=\"color:red\">You found the secret: ";
+      $the_secret .= $secret['secret'];
+      $the_secret .= "</h2>";
+      echo $the_secret;      
       $id = 4;
     }
 
