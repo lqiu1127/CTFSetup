@@ -1,26 +1,27 @@
 # Project 10 - Fortress Globitek
 
-Time spent: **X** hours spent in total
+Time spent: **5** hours spent in total
 
 > Objective: Create an intentionally vulnerable version of the Globitek application with a secret that can be stolen.
 
 ### Requirements
 
-- [ ] All source code and assets necessary for running app
-- [ ] `/globitek.sql` containing all required SQL, including the `secrets` table
-- [ ] GIF Walkthrough of compromise
-- [ ] Brief writeup about the vulnerabilities introduced below
+- [x] All source code and assets necessary for running app
+- [x] `/globitek.sql` containing all required SQL, including the `secrets` table
+- [x] GIF Walkthrough of compromise
+- [x] Brief writeup about the vulnerabilities introduced below
 
 ### Vulnerabilities
 
 Describe the vuln(s) here.
+I used the already existing object searching weakness to create a indirect object reference (IDOR) vulnerability. If the user enter a user id large enough, the database will attempt to short cut the process by not searching. However, it is going to print out the secret instead. 
 
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/iQcdNxJ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='http://i.imgur.com/yWaE3Fz.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
